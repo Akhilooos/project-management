@@ -6,16 +6,37 @@ const Register = () => {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors },
  } = useForm({
-    mode: 'onBlur', // Validate fields on blur
-    reValidateMode: 'onChange', // Re-validate fields on change
+    mode: 'onBlur',
+    reValidateMode: 'onChange', 
  });
+ const onSubmit = async (data) => {
+  // Remove confirmPassword from data before sending
+  const { confirmPassword, ...postData } = data;
+  console.log(postData);
+  try {
+      const response = await fetch("https://6620fbc83bf790e070b17015.mockapi.io/api/v1/user", {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(postData),
+      });
 
- const onSubmit = (data) => {
-    console.log(data);
-    // Here you can handle the form submission, e.g., send data to an API
- };
+      if (!response.ok) {
+          throw new Error('Network response was not ok');
+      }
+
+      const responseData = await response.json();
+      console.log(responseData);
+      reset();
+  } catch (error) {
+      console.error('There was a problem with the fetch operation:', error);
+  }
+};
+ 
 
  return (
   <section className="bg-gray-50 dark:bg-gray-900">
@@ -41,11 +62,11 @@ const Register = () => {
                 {errors.email && <p className="text-red-500 text-xs">Email is required</p>}
               </div>
               <div>
-                <label htmlFor='companyName' className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                 Company Name
+                <label htmlFor='company' className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                 Company
                 </label>
-                <input {...register('companyName', { required: true })} className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
-                {errors.companyName && <p className="text-red-500 text-xs">Company Name is required</p>}
+                <input {...register('company', { required: true })} className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                {errors.company && <p className="text-red-500 text-xs">Company is required</p>}
               </div>
               <div>
                 <label htmlFor='password' className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -71,4 +92,5 @@ const Register = () => {
 };
 
 export default Register;
+
 
