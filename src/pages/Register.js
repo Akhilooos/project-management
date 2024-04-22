@@ -13,11 +13,10 @@ const Register = () => {
     reValidateMode: 'onChange', 
  });
  const onSubmit = async (data) => {
-  // Remove confirmPassword from data before sending
   const { confirmPassword, ...postData } = data;
   console.log(postData);
   try {
-      const response = await fetch("https://6620fbc83bf790e070b17015.mockapi.io/api/v1/user", {
+      const response = await fetch("https://66225b1f27fcd16fa6c992e4.mockapi.io/api/v1/user", {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',

@@ -31,6 +31,9 @@ const Dashboard = () => {
     const handleEditProject = (projectId, newProjectName, newProjectDetails) => {
         navigate(`/user/${id}/projects/edit/${projectId}`);
     };
+    const handleLogout = () => {
+        navigate('/');
+    };
 
     return (
         <div className="container mx-auto px-4">
@@ -47,6 +50,7 @@ const Dashboard = () => {
                     <ProjectItem key={project.id} item={project} onEdit={handleEditProject} onDelete={handleDeleteProject} />
                 ))
             )}
+             <button onClick={handleLogout} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-4">Logout</button>
         </div>
     );
 };

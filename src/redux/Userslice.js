@@ -1,5 +1,6 @@
 import { createAsyncThunk,createSlice } from "@reduxjs/toolkit";
 
+
 const initialState = {
     userList:[],
     loading: false,
@@ -9,8 +10,10 @@ const initialState = {
 const fetchUSers = createAsyncThunk('getusers', async () => {
     const response = await fetch("https://66225b1f27fcd16fa6c992e4.mockapi.io/api/v1/user");
     const userData = await response.json();
+    console.log('API Response:', userData);
     return userData;
 });
+
 
 const userSlice = createSlice({
     name:"users",
